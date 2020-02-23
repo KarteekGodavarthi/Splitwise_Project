@@ -34,6 +34,11 @@ public class Controller {
 		return userService.getUser(uid);
 	}
 	
+	@GetMapping("/splitwise/username/{uid}")
+	public String getUserName(@PathVariable int uid){
+		return userService.getUserName(uid);
+	}
+	
 	@PostMapping("/splitwise/user")
 	public User insertUser(@RequestBody User user) {
 		return userService.insertUser(user);

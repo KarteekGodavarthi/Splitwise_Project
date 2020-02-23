@@ -3,6 +3,7 @@ package com.company.splitwise.expense.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.splitwise.expense.bean.Expense;
+import com.company.splitwise.expense.bean.SplitObject;
 import com.company.splitwise.expense.service.ExpenseService;
 
 @RestController
@@ -53,5 +55,11 @@ public class ExpenseController {
 	@DeleteMapping("splitwise/expense/{eid}")
 	public void deleteExpense(@PathVariable int eid) {
 		expenseService.deleteExpense(eid);
+	}
+	
+	
+	@GetMapping("splitwise/expense_split/{eid}")
+	public SplitObject getExpenseSplit(@PathVariable int eid) {
+		return expenseService.getSplitbyeId(eid);
 	}
 }
