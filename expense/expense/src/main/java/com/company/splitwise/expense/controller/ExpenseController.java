@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.company.splitwise.expense.bean.Expense;
 import com.company.splitwise.expense.bean.SplitObject;
 import com.company.splitwise.expense.service.ExpenseService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.ribbon.proxy.annotation.Hystrix;
 
 @RestController
 public class ExpenseController {
 	@Autowired
 	private ExpenseService expenseService;
 	
+	@HystrixCommand(fallbackMethod = "addExpenseFallBack")
 	@PostMapping("/splitwise/expense")
 	public Expense addExpense(@RequestBody Expense expense) {
 		return expenseService.addExpense(expense);
@@ -59,7 +62,22 @@ public class ExpenseController {
 	
 	
 	@GetMapping("splitwise/expense_split/{eid}")
+	@HystrixCommand(fallbackMethod = "getExpenseSplitFallBack")
 	public SplitObject getExpenseSplit(@PathVariable int eid) {
 		return expenseService.getSplitbyeId(eid);
 	}
+	
+	public Expense addExpenseFallBack(@RequestBody Expense expense) {
+		Expense expense1=null;
+		System.out.println("Fall Back for adding expense! Please check the Group Server running");
+		return expense1;
+	}
+	
+	public SplitObject getExpenseSplitFallBack(@PathVariable int eid) {
+		SplitObject splitObject=null;
+		System.out.println("Fall Back for adding expense! Please check the User Server running");
+		return splitObject;
+	}
+	
+	
 }
