@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.company.splitwise.user.bean.User;
+import com.company.splitwise.user.bean.UserDetails;
 import com.company.splitwise.user.repo.UserRepository;
 import com.company.splitwise.user.service.UserService;
 
@@ -52,5 +53,10 @@ public class Controller {
 	@PutMapping("/splitwise/user")
 	public User updateUser(@RequestBody User user) {
 		return userService.updateUser(user);
+	}
+	
+	@GetMapping("/splitwise/user-by-name/{userName}")
+	public UserDetails getUserByUserName(@PathVariable String userName) {
+		return userService.getUserByUserName(userName);
 	}
 }	

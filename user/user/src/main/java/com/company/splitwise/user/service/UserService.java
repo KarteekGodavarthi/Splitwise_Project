@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.company.splitwise.user.bean.User;
+import com.company.splitwise.user.bean.UserDetails;
 import com.company.splitwise.user.repo.UserRepository;
 
 
@@ -32,5 +33,15 @@ public class UserService {
 	}
 	public String getUserName(int uid) {
 		return userRepository.findById(uid).get().getUserName();
+	}
+	public UserDetails getUserByUserName(String userName) {
+		List<User> users=userRepository.getUserByUserName(userName);
+		if(users.size()==1) {
+			UserDetails userDetails=new UserDetails(users.get(0).getUserName(),users.get(0).getPassword());
+			return userDetails;
+		}
+		else {
+			return new UserDetails();
+		}
 	}
 }
